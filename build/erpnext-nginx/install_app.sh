@@ -14,6 +14,7 @@ mkdir -p apps
 cd apps
 git clone --depth 1 https://github.com/frappe/frappe ${BRANCH}
 git clone --depth 1 ${APP_REPO} ${BRANCH} ${APP_NAME}
+git clone https://github.com/Ion-Mobility-Infra/expensify_integration
 
 echo "Install frappe NodeJS dependencies . . ."
 cd /home/frappe/frappe-bench/apps/frappe
@@ -24,19 +25,37 @@ yarn
 echo "Build browser assets . . ."
 cd /home/frappe/frappe-bench/apps/frappe
 yarn production --app ${APP_NAME}
+echo "Install ${APP_NAME} NodeJS dependencies . . ."
+cd /home/frappe/frappe-bench/apps/expensify_integration
+yarn
+echo "Build browser assets . . ."
+cd /home/frappe/frappe-bench/apps/frappe
+yarn production --app expensify_integration
 echo "Install frappe NodeJS production dependencies . . ."
 cd /home/frappe/frappe-bench/apps/frappe
 yarn install --production=true
 echo "Install ${APP_NAME} NodeJS production dependencies . . ."
 cd /home/frappe/frappe-bench/apps/${APP_NAME}
 yarn install --production=true
+echo "Install ${APP_NAME} NodeJS production dependencies . . ."
+cd /home/frappe/frappe-bench/apps/expensify_integration
+yarn install --production=true
+
 
 mkdir -p /home/frappe/frappe-bench/sites/assets/${APP_NAME}
 cp -R /home/frappe/frappe-bench/apps/${APP_NAME}/${APP_NAME}/public/* /home/frappe/frappe-bench/sites/assets/${APP_NAME}
+mkdir -p /home/frappe/frappe-bench/sites/assets/expensify_integration
+cp -R /home/frappe/frappe-bench/apps/expensify_integration/expensify_integration/public/* /home/frappe/frappe-bench/sites/assets/expensify_integration
+
 
 # Add frappe and all the apps available under in frappe-bench here
 echo "rsync -a --delete /var/www/html/assets/frappe /assets" > /rsync
 echo "rsync -a --delete /var/www/html/assets/${APP_NAME} /assets" >> /rsync
+echo "rsync -a --delete /var/www/html/assets/expensify_integration /assets" >> /rsync
+
 chmod +x /rsync
 
 rm /home/frappe/frappe-bench/sites/apps.txt
+
+
+

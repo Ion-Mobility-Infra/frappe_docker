@@ -1,5 +1,5 @@
 ARG NODE_IMAGE_TAG=12-buster-slim
-ARG GIT_BRANCH=develop
+ARG GIT_BRANCH=v13.0.0-beta.11
 ARG DOCKER_REGISTRY_PREFIX=frappe
 FROM node:${NODE_IMAGE_TAG}
 
@@ -18,6 +18,7 @@ FROM ${DOCKER_REGISTRY_PREFIX}/frappe-nginx:${GIT_BRANCH}
 COPY --from=0 /home/frappe/frappe-bench/sites/ /var/www/html/
 COPY --from=0 /rsync /rsync
 RUN echo "erpnext" >> /var/www/html/apps.txt
+RUN echo -n "\nexpensify_integration" >> /var/www/html/apps.txt
 
 VOLUME [ "/assets" ]
 
