@@ -2,6 +2,34 @@
 |---------|-----------------------------------------------------------------------------------------------------------------------------|
 | Master  | [![Build Status](https://travis-ci.com/frappe/frappe_docker.svg?branch=master)](https://travis-ci.com/frappe/frappe_docker) |
 
+## How to reproduce
+
+Requirements: docker, docker-compose installed on Ubuntu desktop.
+Run the following commands. 
+
+Git clone.
+```sh
+git clone https://github.com/Ion-Mobility-Infra/frappe_docker.git
+git checkout expensify-custom
+```
+
+Set up environment variables.
+```sh
+cp env-custom .env
+```
+
+Docker compose to run the project.
+```sh
+sudo docker-compose --project-name erp-expensify up -d
+```
+
+Check the progress of the setup.
+```sh 
+sudo docker logs erp-expensify_site-creator_1 -f
+```
+
+Once done, you can open http://mysite124.localhost in your browser.
+
 ## Getting Started
 
 ### Try in Play With Docker
