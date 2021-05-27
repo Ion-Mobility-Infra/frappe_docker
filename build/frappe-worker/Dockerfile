@@ -3,11 +3,11 @@ FROM python:3.7-slim-buster
 # Add non root user without password
 RUN useradd -ms /bin/bash frappe
 
-ARG GIT_BRANCH=develop
+ARG GIT_BRANCH=v13.0.0-beta.11
 ARG ARCH=amd64
 ENV PYTHONUNBUFFERED 1
 ENV NVM_DIR=/home/frappe/.nvm
-ENV NODE_VERSION=12.20.0
+ENV NODE_VERSION=14.17.0
 ENV PATH="/home/frappe/.nvm/versions/node/v${NODE_VERSION}/bin/:${PATH}"
 
 # Install dependencies

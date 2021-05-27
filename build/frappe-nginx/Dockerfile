@@ -5,7 +5,7 @@
 FROM python:3.7-slim-buster
 
 ENV NVM_DIR=/root/.nvm
-ENV NODE_VERSION=12.20.0
+ENV NODE_VERSION=14.17.0
 ENV PATH="/root/.nvm/versions/node/v${NODE_VERSION}/bin/:${PATH}"
 RUN apt-get update -y \
     && apt-get install wget python2 git build-essential -y \
@@ -21,7 +21,7 @@ WORKDIR /home/frappe/frappe-bench
 RUN mkdir -p /home/frappe/frappe-bench/sites \
     && echo "frappe" > /home/frappe/frappe-bench/sites/apps.txt
 
-ARG GIT_BRANCH=develop
+ARG GIT_BRANCH=v13.0.0-beta.11
 RUN mkdir -p apps sites/assets/css  \
     && cd apps \
     && git clone --depth 1 https://github.com/frappe/frappe --branch $GIT_BRANCH
