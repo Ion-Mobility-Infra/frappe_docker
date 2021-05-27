@@ -16,7 +16,7 @@ from utils import (
 # to maintain compatibility across all frappe versions.
 try:
     # <= version-{11,12}
-    from frappe.commands.site import _new_site
+    from frappe.commands.site import _new_site, install_app
 except ImportError:
     # >= version-13 and develop
     from frappe.installer import _new_site
