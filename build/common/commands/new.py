@@ -54,21 +54,25 @@ def main():
     frappe.init(site_name, new_site=True)
 
     if semantic_version.Version(frappe.__version__).major > 11:
-        _new_site(
-            None,
-            site_name,
-            mariadb_root_username=db_root_username,
-            mariadb_root_password=db_root_password,
-            admin_password=get_password("ADMIN_PASSWORD", 'admin'),
-            verbose=True,
-            install_apps=install_apps,
-            source_sql=None,
-            force=force,
-            db_type=db_type,
-            reinstall=False,
-            db_host=db_host,
-            db_port=db_port,
-        )
+        if not force and os.path.exists(site_name):
+            _new_site(
+                None,
+                site_name,
+                mariadb_root_username=db_root_username,
+                mariadb_root_password=db_root_password,
+                admin_password=get_password("ADMIN_PASSWORD", 'admin'),
+                verbose=True,
+                install_apps=install_apps,
+                source_sql=None,
+                force=force,
+                db_type=db_type,
+                reinstall=False,
+                db_host=db_host,
+                db_port=db_port,
+            )
+        else:
+            for app in install_apps:
+                install_app(app, verbose=True, set_as_patched=not source_sql)
     else:
         _new_site(
             None,
