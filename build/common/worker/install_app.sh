@@ -1,4 +1,4 @@
-#!/bin/bash
+e#!/bin/bash
 
 APP_NAME=${1}
 APP_REPO=${2}
@@ -14,3 +14,5 @@ cd ./apps
 
 git clone --depth 1 -o upstream ${APP_REPO} ${BRANCH} ${APP_NAME}
 pip3 install --no-cache-dir -e /home/frappe/frappe-bench/apps/${APP_NAME}
+
+echo ${APP_NAME} >> /home/frappe/frappe-bench/sites/apps.txt
