@@ -11,9 +11,9 @@ RUN chmod +x /install_app && \
   apt-get clean && \
   rm -rf /var/lib/apt/lists/*
 
-RUN /install_app erpnext https://github.com/frappe/erpnext ${GIT_BRANCH}
+RUN /install_app erpnext https://github.com/Ion-Mobility-Infra/erpnext ${GIT_BRANCH}
 
-FROM ${DOCKER_REGISTRY_PREFIX}/frappe-nginx:${GIT_BRANCH}
+FROM urieltan/frappe:frappe-nginx
 
 COPY --from=0 /home/frappe/frappe-bench/sites/ /var/www/html/
 COPY --from=0 /rsync /rsync

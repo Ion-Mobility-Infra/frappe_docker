@@ -24,7 +24,7 @@ RUN mkdir -p /home/frappe/frappe-bench/sites \
 ARG GIT_BRANCH=v13.0.0-beta.11
 RUN mkdir -p apps sites/assets/css  \
     && cd apps \
-    && git clone --depth 1 https://github.com/frappe/frappe --branch $GIT_BRANCH
+    && git clone --depth 1 https://github.com/Ion-Mobility-Infra/frappe --branch $GIT_BRANCH
 
 RUN cd /home/frappe/frappe-bench/apps/frappe \
     && yarn \

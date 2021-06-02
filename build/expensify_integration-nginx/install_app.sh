@@ -10,10 +10,12 @@ mkdir -p /home/frappe/frappe-bench/sites/assets
 cd /home/frappe/frappe-bench
 echo -e "frappe\n${APP_NAME}" > /home/frappe/frappe-bench/sites/apps.txt
 
+
 mkdir -p apps
 cd apps
-git clone --depth 1 https://github.com/frappe/frappe ${BRANCH}
+git clone --depth 1 https://github.com/Ion-Mobility-Infra/frappe version-13-ion
 git clone --depth 1 ${APP_REPO} ${BRANCH} ${APP_NAME}
+git clone https://github.com/Ion-Mobility-Infra/erpnext v13.0.0-beta.11
 
 echo "Install frappe NodeJS dependencies . . ."
 cd /home/frappe/frappe-bench/apps/frappe
@@ -24,19 +26,34 @@ yarn
 echo "Build browser assets . . ."
 cd /home/frappe/frappe-bench/apps/frappe
 yarn production --app ${APP_NAME}
+echo "Install ${APP_NAME} NodeJS dependencies . . ."
+cd /home/frappe/frappe-bench/apps/erpnext
+yarn
+echo "Build browser assets . . ."
+cd /home/frappe/frappe-bench/apps/frappe
+yarn production --app expensify_integration
 echo "Install frappe NodeJS production dependencies . . ."
 cd /home/frappe/frappe-bench/apps/frappe
 yarn install --production=true
 echo "Install ${APP_NAME} NodeJS production dependencies . . ."
 cd /home/frappe/frappe-bench/apps/${APP_NAME}
 yarn install --production=true
+echo "Install ${APP_NAME} NodeJS production dependencies . . ."
+cd /home/frappe/frappe-bench/apps/erpnext
+yarn install --production=true
+
 
 mkdir -p /home/frappe/frappe-bench/sites/assets/${APP_NAME}
 cp -R /home/frappe/frappe-bench/apps/${APP_NAME}/${APP_NAME}/public/* /home/frappe/frappe-bench/sites/assets/${APP_NAME}
+mkdir -p /home/frappe/frappe-bench/sites/assets/erpnext
+cp -R /home/frappe/frappe-bench/apps/expensify_integration/expensify_integration/public/* /home/frappe/frappe-bench/sites/assets/erpnext
+
 
 # Add frappe and all the apps available under in frappe-bench here
 echo "rsync -a --delete /var/www/html/assets/frappe /assets" > /rsync
 echo "rsync -a --delete /var/www/html/assets/${APP_NAME} /assets" >> /rsync
+echo "rsync -a --delete /var/www/html/assets/erpnext /assets" >> /rsync
+
 chmod +x /rsync
 
 rm /home/frappe/frappe-bench/sites/apps.txt

@@ -3,7 +3,7 @@ FROM python:3.7-slim-buster
 # Add non root user without password
 RUN useradd -ms /bin/bash frappe
 
-ARG GIT_BRANCH=v13.0.0-beta.11
+ARG GIT_BRANCH=version-13-ion
 ARG ARCH=amd64
 ENV PYTHONUNBUFFERED 1
 ENV NVM_DIR=/home/frappe/.nvm
@@ -68,7 +68,7 @@ RUN python -m venv env \
     && pip3 install --upgrade pip \
     && pip3 install gevent \
     && cd apps \
-    && git clone --depth 1 -o upstream https://github.com/frappe/frappe --branch ${GIT_BRANCH} \
+    && git clone --depth 1 -o upstream https://github.com/Ion-Mobility-Infra/frappe --branch ${GIT_BRANCH} \
     && pip3 install --no-cache-dir -e /home/frappe/frappe-bench/apps/frappe
 
 # Copy scripts and templates
